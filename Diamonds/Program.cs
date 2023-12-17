@@ -1,28 +1,20 @@
-﻿using Diamonds;
-
-namespace Diamonds
+﻿namespace Diamonds
 {
     class Program
     {
-        private const int consoleBoardWidth = 8;
-        private const int consoleBoardHight = 8;
-        public static bool gameOver = false;
-        
+        private static bool quit = false;
 
         static void Main()
         {
-          //  Console.SetWindowSize(consoleBoardWidth, consoleBoardHight);
-         //   Console.SetBufferSize(consoleBoardWidth, consoleBoardHight);
-
             Console.CursorVisible = false;
             Game game = new Game();
-            game.Print();
+            game.Update();
             MainLoop(game);
         }
 
         static void MainLoop(Game game)
          {
-             while(!gameOver)
+             while(!quit && game.MovesLeft > 0)
              {
                  ConsoleKey key = Console.ReadKey(true).Key;
                  if(key == ConsoleKey.Enter) Cursor._isChosen = !Cursor._isChosen;
@@ -36,9 +28,13 @@ namespace Diamonds
                          break;
                      case ConsoleKey.LeftArrow: game.MoveCursor(-1, 0);
                          break;
+                     case ConsoleKey.Q : quit = true;
+                         break;
                  }
                  game.Update();
              }
+             Thread.Sleep(2500);
+             game.GameOver();
          }
     } 
 }

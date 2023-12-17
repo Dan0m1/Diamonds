@@ -1,23 +1,25 @@
-﻿namespace Diamonds;
-
-class Cursor
+﻿namespace Diamonds
 {
-    public static int X { get; set; } 
-    public static int Y { get; set; }
-
-    public static ConsoleColor Color
+    class Cursor
     {
-        get
+        public static int X { get; set; }
+        public static int Y { get; set; }
+
+        public static ConsoleColor Color
         {
-            if (_isChosen) return ConsoleColor.DarkGray;
-            return ConsoleColor.DarkCyan;
+            get
+            {
+                if (_isChosen) return ConsoleColor.DarkGray;
+                return ConsoleColor.DarkCyan;
+            }
         }
-    }
-    public static bool _isChosen = false;
 
-    public Cursor(int x, int y)
-    {
-        X = x;
-        Y = y;
+        public static bool _isChosen = false;
+
+        public Cursor(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }

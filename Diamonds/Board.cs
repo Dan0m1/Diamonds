@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic.FileIO;
-
-namespace Diamonds
+﻿namespace Diamonds
 {
     class Board
     {
@@ -17,7 +8,7 @@ namespace Diamonds
         public Board(int width, int height)
         {
             _gameBoard = new Diamond[width, height];
-            Set(width, height);
+            Set(width, height, true);
             Print();
         }
 
@@ -31,6 +22,7 @@ namespace Diamonds
             foreach (Diamond diamond in diamonds)
             {
                 _gameBoard[diamond.X, diamond.Y] = null;
+                Game.Score += 10;
             }
         }
         
@@ -46,7 +38,7 @@ namespace Diamonds
 
         }
 
-        public void Set(int width, int height)
+        public void Set(int width, int height, bool init)
         {
             int rnd;
             bool found = false;
@@ -62,9 +54,10 @@ namespace Diamonds
                         {
                             found = true;
                             _gameBoard[x, y] = new Diamond(x, y, _color[rnd], rnd);
+                            if(!init) Game.toCheck.Add(x);
                         }
                     }
-
+                    
                     found = false;
                 }
             }
@@ -148,6 +141,7 @@ namespace Diamonds
                         _gameBoard[x, y + 1].Y = y + 1;
                         _gameBoard[x, y] = null;
                         hasFallen = true;
+                        Game.toCheck.Add(x);
                         break;
                     }
                 }
